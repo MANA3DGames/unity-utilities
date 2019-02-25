@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace MANA3DGames
 {
-	public class CommonTween
+	public static class CommonTween
 	{
 		#region [Enumeration]
 
@@ -247,6 +247,54 @@ namespace MANA3DGames
 			return tween;
 		}
 
+        public static LTDescr MoveZ( GOGroup group, string name, float from, float to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None  )
+        {
+            group.SetLocalPositionZ( name, from, true );
+            var tween = LeanTween.moveZ( group.Get( name ), to, time );
+            tween = SetLastParameters( tween, delay, onCompleteAction, ease );
+            return tween;
+        }
+        public static LTDescr MoveZ( GameObject go, float from, float to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None  )
+        {
+            var rect = go.GetComponent<Transform>();
+            rect.localPosition = new Vector3( rect.localPosition.x, rect.localPosition.y, from );
+            var tween = LeanTween.moveZ( go, to, time );
+            tween = SetLastParameters( tween, delay, onCompleteAction, ease );
+            return tween;
+        }
+
+        public static LTDescr Move( GOGroup group, string name, Vector3 from, Vector3 to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None  )
+        {
+            group.SetLocalPosition( name, from, true );
+            var tween = LeanTween.move( group.Get( name ), to, time );
+            tween = SetLastParameters( tween, delay, onCompleteAction, ease );
+            return tween;
+        }
+        public static LTDescr Move( GameObject go, Vector3 from, Vector3 to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None  )
+        {
+            var rect = go.GetComponent<Transform>();
+            rect.localPosition = from;
+            var tween = LeanTween.move( go, to, time );
+            tween = SetLastParameters( tween, delay, onCompleteAction, ease );
+            return tween;
+        }
+
+        public static LTDescr Move( GOGroup group, string name, Vector3 from, Vector3[] to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None  )
+        {
+            group.SetLocalPosition( name, from, true );
+            var tween = LeanTween.move( group.Get( name ), to, time );
+            tween = SetLastParameters( tween, delay, onCompleteAction, ease );
+            return tween;
+        }
+        public static LTDescr Move( GameObject go, Vector3 from, Vector3[] to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None  )
+        {
+            var rect = go.GetComponent<Transform>();
+            rect.localPosition = from;
+            var tween = LeanTween.move( go, to, time );
+            tween = SetLastParameters( tween, delay, onCompleteAction, ease );
+            return tween;
+        }
+
 
 		public static LTDescr UIMoveX( UIMenu menu, string name, float from, float to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None  )
 		{
@@ -336,6 +384,24 @@ namespace MANA3DGames
 			tween = SetLastParameters( tween, delay, onCompleteAction, ease );
 			return tween;
 		}
+
+        public static LTDescr Rotate( GOGroup group, string name, Quaternion from, Quaternion to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None )
+        {
+            return Rotate( group.Get( name ), from, to, time, delay, onCompleteAction, ease );
+        }
+        public static LTDescr Rotate( GameObject go, Quaternion from, Quaternion to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None )
+        {
+            var trans = go.GetComponent<Transform>();
+
+            trans.localRotation = Quaternion.Lerp( trans.localRotation, from, 0.0f );
+
+            var tween = LeanTween.rotateLocal( go, to.eulerAngles, time );
+            //tween.setFrom( from ); DO NOT ADD THIS!!!!!
+
+            tween = SetLastParameters( tween, delay, onCompleteAction, ease );
+            return tween;
+        }
+
 
 
 		public static LTDescr UIRotateZ( UIMenu menu, string name, float from, float to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None )

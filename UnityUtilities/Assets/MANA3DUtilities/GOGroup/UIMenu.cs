@@ -103,22 +103,6 @@ namespace MANA3DGames
 
 		#region [Set Functions]
 
-//        public bool SetText( string componentName, string text, bool internalTxt = false )
-//        {
-//            GameObject go;
-//            if ( gameObjects.TryGetValue( componentName, out go ) )
-//            {
-//                Text txt = internalTxt ? go.GetComponentInChildren<Text>() : go.GetComponent<Text>();
-//                if ( txt )
-//                {
-//                    txt.text = text;
-//                    return true;
-//                }
-//            }
-//
-//            return false;
-//        }
-
 		public bool SetText( string componentName, string text, bool internalTxt = false )
 		{
 			GameObject go;
@@ -441,9 +425,7 @@ namespace MANA3DGames
             {
 				TextMeshProUGUI txt = internalTxt ? go.GetComponentInChildren<TextMeshProUGUI>() : go.GetComponent<TextMeshProUGUI>();
                 if ( txt )
-                {
                     return txt.text;
-                }
             }
 
             return string.Empty;
@@ -456,10 +438,8 @@ namespace MANA3DGames
 			{
 				TMP_InputField txt = internalTxt ? go.GetComponentInChildren<TMP_InputField>() : go.GetComponent<TMP_InputField>();
 				if ( txt )
-				{
-					return txt.text;
-				}
-			}
+                    return txt.text;
+            }
 
 			return string.Empty;
 		}
@@ -471,36 +451,46 @@ namespace MANA3DGames
 			{
 				Slider slider = internalTxt ? go.GetComponentInChildren<Slider>() : go.GetComponent<Slider>();
 				if ( slider )
-				{
-					return slider.value;
-				}
-			}
+                    return slider.value;
+            }
 
 			return 0.0f;
 		}
 
-		public Sprite GetImageSprite( string componentName, bool internalImg = false )
+        public Image GetUIImage( string componentName, bool internalImg = false )
+        {
+            GameObject go;
+
+            if ( gameObjects.TryGetValue( componentName, out go ) )
+            {
+                if ( internalImg )
+                {
+                    if ( go.transform.childCount > 0 )
+                        return go.transform.GetChild( 0 ).GetComponent<Image>();
+                }
+                else
+                    return go.GetComponent<Image>();
+            }
+
+            return null;
+        }
+
+        public Sprite GetImageSprite( string componentName, bool internalImg = false )
 		{
-			GameObject go;
-
-			if ( gameObjects.TryGetValue( componentName, out go ) )
-			{
-				Image img = go.GetComponent<Image>();
-				if ( internalImg )
-				{
-					if ( go.transform.childCount > 0 )
-						img = go.transform.GetChild(0).GetComponent<Image>();
-				}
-
-				if ( img )
-				{
-					return img.sprite;
-				}
-			}
-
+            Image img = GetUIImage( componentName, internalImg );
+            if ( img )
+                return img.sprite;
 			return null;
 		}
 
+        public float GetImageFillAmount( string componentName, bool internalImg = false )
+        {
+            Image img = GetUIImage( componentName, internalImg );
+            if ( img )
+                return img.fillAmount;
+
+            return -1.0f;
+        }
 
         public TextMeshProUGUI GetTextMeshProUGUI( string componentName, bool internalTxt = false )
         {

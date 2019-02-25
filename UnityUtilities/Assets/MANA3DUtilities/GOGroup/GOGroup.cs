@@ -73,15 +73,28 @@ namespace MANA3DGames
 			GameObject.Destroy( root );
 		}
 
-		#endregion
+        public virtual bool Delete( string name )
+        {
+            GameObject component;
+            if ( gameObjects.TryGetValue( name, out component ) )
+            {
+                gameObjects.Remove( name );
+                Object.Destroy( component );
+                return true;
+            }
+            else 
+                return false;
+        }
 
-		#region [Show/Hide Functions]
+        #endregion
 
-		/// <summary>
-		/// Shows the root GameObject.
-		/// </summary>
-		/// <param name="show">If set to <c>true</c> show.</param>
-		public void ShowRoot( bool show )
+        #region [Show/Hide Functions]
+
+        /// <summary>
+        /// Shows the root GameObject.
+        /// </summary>
+        /// <param name="show">If set to <c>true</c> show.</param>
+        public void ShowRoot( bool show )
 		{
 			// Activate/Diactivate root gameObject. 
 			root.SetActive( show );
