@@ -19,10 +19,10 @@ namespace MANA3DGames
 
 		#region [Listeners Functions]
 
-		public bool RemoveAllListenerOnButton( string componentName, bool inner = false  )
+		public bool RemoveAllListenerOnButton( string name, bool inner = false  )
 		{
-			GameObject go;
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
 				Button btn = inner ? go.GetComponentInChildren<Button>() : go.GetComponent<Button>();
 				if ( btn )
@@ -36,10 +36,10 @@ namespace MANA3DGames
 		}
 
 
-		public bool AddListenerToButton( string componentName, UnityEngine.Events.UnityAction action, bool inner = false )
+		public bool AddListenerToButton( string name, UnityEngine.Events.UnityAction action, bool inner = false )
         {
-            GameObject go;
-            if ( gameObjects.TryGetValue( componentName, out go ) )
+            GameObject go = Get( name );
+            if ( go )
             {
 				Button btn = inner ? go.GetComponentInChildren<Button>() : go.GetComponent<Button>();
                 if ( btn )
@@ -52,17 +52,17 @@ namespace MANA3DGames
             return false;
         }
 
-		public bool AddListenerToRepeatButton( string componentName, UnityEngine.Events.UnityAction downAction, UnityEngine.Events.UnityAction upAction )
+		public bool AddListenerToRepeatButton( string name, UnityEngine.Events.UnityAction downAction, UnityEngine.Events.UnityAction upAction )
 		{
-			AddEventTrigger( componentName, EventTriggerType.PointerDown, ( act )=> { downAction.Invoke(); } );
-			return AddEventTrigger( componentName, EventTriggerType.PointerUp, ( act )=> { upAction.Invoke(); } );
+			AddEventTrigger( name, EventTriggerType.PointerDown, ( act )=> { downAction.Invoke(); } );
+			return AddEventTrigger( name, EventTriggerType.PointerUp, ( act )=> { upAction.Invoke(); } );
 		}
 
 
-		public bool AddEventTrigger( string componentName, EventTriggerType type, UnityEngine.Events.UnityAction<BaseEventData> action )
+		public bool AddEventTrigger( string name, EventTriggerType type, UnityEngine.Events.UnityAction<BaseEventData> action )
 		{
-			GameObject go;
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 				return AddEventTrigger( go, type, action );
 
 			return false;
@@ -83,10 +83,10 @@ namespace MANA3DGames
 		}
 
 
-		public bool AddListenerToSliderValueChanged( string componentName, UnityEngine.Events.UnityAction<float> action, bool inner = false )
+		public bool AddListenerToSliderValueChanged( string name, UnityEngine.Events.UnityAction<float> action, bool inner = false )
 		{
-			GameObject go;
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
 				Slider slider = inner ? go.GetComponentInChildren<Slider>() : go.GetComponent<Slider>();
 				if ( slider )
@@ -103,10 +103,10 @@ namespace MANA3DGames
 
 		#region [Set Functions]
 
-		public bool SetText( string componentName, string text, bool internalTxt = false )
+		public bool SetText( string name, string text, bool internalTxt = false )
 		{
-			GameObject go;
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
 				TextMeshProUGUI txt = internalTxt ? go.GetComponentInChildren<TextMeshProUGUI>() : go.GetComponent<TextMeshProUGUI>();
 				if ( txt )
@@ -120,10 +120,10 @@ namespace MANA3DGames
 		}
 
 
-		public bool SetAlpha( string componentName, float alpha, bool internalImg = false, bool show = true )
+		public bool SetAlpha( string name, float alpha, bool internalImg = false, bool show = true )
 		{
-			GameObject go;
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
 				if ( internalImg )
 				{
@@ -159,10 +159,10 @@ namespace MANA3DGames
 			return false;
 		}
 
-		public bool SetAlphaChildren( string componentName, float alpha, bool show = true )
+		public bool SetAlphaChildren( string name, float alpha, bool show = true )
 		{
-			GameObject go;
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
 				Graphic[] graphics = go.GetComponentsInChildren<Graphic>();
 				if ( graphics != null )
@@ -182,10 +182,10 @@ namespace MANA3DGames
 			return false;
 		}
 
-        public bool SetColor( string componentName, Color color, bool internalTxt = false )
+        public bool SetColor( string name, Color color, bool internalTxt = false )
         {
-            GameObject go;
-            if ( gameObjects.TryGetValue( componentName, out go ) )
+            GameObject go = Get( name );
+			if ( go )
             {
 				if ( internalTxt )
 				{
@@ -218,10 +218,10 @@ namespace MANA3DGames
             return false;
         }
 
-        public bool SetInputFiledText( string componentName, string text, bool internalTxt = false )
+        public bool SetInputFiledText( string name, string text, bool internalTxt = false )
         {
-            GameObject go;
-            if ( gameObjects.TryGetValue( componentName, out go ) )
+            GameObject go = Get( name );
+			if ( go )
             {
                 InputField txt = internalTxt ? go.GetComponentInChildren<InputField>() : go.GetComponent<InputField>();
                 if ( txt )
@@ -234,11 +234,10 @@ namespace MANA3DGames
             return false;
         }
 
-		public bool SetImageSprite( string componentName, Sprite sprite, bool internalImg = false, bool activate = true, bool setNative = false )
+		public bool SetImageSprite( string name, Sprite sprite, bool internalImg = false, bool activate = true, bool setNative = false )
 		{
-			GameObject go;
-
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
 				Image img = go.GetComponent<Image>();
 				if ( internalImg )
@@ -263,11 +262,10 @@ namespace MANA3DGames
 			return false;
 		}
 
-		public void SetImageNaitve( string componentName, bool internalImg = false )
+		public void SetImageNaitve( string name, bool internalImg = false )
 		{
-			GameObject go;
-
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
 				Image img = go.GetComponent<Image>();
 				if ( internalImg )
@@ -284,9 +282,9 @@ namespace MANA3DGames
 
 		public void SetButtonInteractable( string name, bool val )
 		{
-			GameObject component = null;
-			if ( gameObjects.TryGetValue( name, out component ) )
-				component.GetComponent<Button>().interactable = val;
+			GameObject go = Get( name );
+			if ( go )
+				go.GetComponent<Button>().interactable = val;
 			else
 				Debug.Log( name + " couldn't be found in " + root.name );
 		}
@@ -304,37 +302,49 @@ namespace MANA3DGames
 
 		public void SetImageFillVertical( string name, Image.OriginVertical origin )
 		{
-			Image img = Get( name ).GetComponent<Image>();
-			img.type = Image.Type.Filled;
-			img.fillMethod = Image.FillMethod.Vertical;
-			img.fillOrigin = (int)origin;
+            GameObject go = Get( name );
+			if ( go )
+            {
+                Image img = go.GetComponent<Image>();
+                img.type = Image.Type.Filled;
+                img.fillMethod = Image.FillMethod.Vertical;
+                img.fillOrigin = (int)origin;
+            }
 		}
 		public void SetImageFillHorizontal( string name, Image.OriginHorizontal origin )
 		{
-			Image img = Get( name ).GetComponent<Image>();
-			img.type = Image.Type.Filled;
-			img.fillMethod = Image.FillMethod.Horizontal;
-			img.fillOrigin = (int)origin;
+            GameObject go = Get( name );
+			if ( go )
+            {
+                Image img = go.GetComponent<Image>();
+                img.type = Image.Type.Filled;
+                img.fillMethod = Image.FillMethod.Horizontal;
+                img.fillOrigin = (int)origin;
+            }
 		}
 
 		public void SetImageFillValue( string name, float val )
 		{
-			Get( name ).GetComponent<Image>().fillAmount = val;
+            GameObject go = Get( name );
+			if ( go )
+			    go.GetComponent<Image>().fillAmount = val;
 		}
 
 		public void SetSliderValue( string name, float val )
 		{
-			Get( name ).GetComponent<Slider>().value = val;
+            GameObject go = Get( name );
+			if ( go )
+			    go.GetComponent<Slider>().value = val;
 		}
 
 
 		public void SetRectScale( string name, Vector2 scale, bool show = true )
 		{
-			GameObject component = null;
-			if ( gameObjects.TryGetValue( name, out component ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
-				component.GetComponent<RectTransform>().localScale = scale;
-				component.SetActive( show );
+				go.GetComponent<RectTransform>().localScale = scale;
+				go.SetActive( show );
 			}
 			else
 				Debug.Log( name + " couldn't be found in " + root.name );
@@ -342,12 +352,12 @@ namespace MANA3DGames
 
 		public void SetRectScaleX( string name, float val, bool show = true )
 		{
-			GameObject component = null;
-			if ( gameObjects.TryGetValue( name, out component ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
-				var scale = component.GetComponent<RectTransform>().localScale;
-				component.GetComponent<RectTransform>().localScale = new Vector3( val, scale.y, scale.z );
-				component.SetActive( show );
+				var scale = go.GetComponent<RectTransform>().localScale;
+                go.GetComponent<RectTransform>().localScale = new Vector3( val, scale.y, scale.z );
+                go.SetActive( show );
 			}
 			else
 				Debug.Log( name + " couldn't be found in " + root.name );
@@ -355,12 +365,12 @@ namespace MANA3DGames
 
 		public void SetRectScaleY( string name, float val, bool show = true )
 		{
-			GameObject component = null;
-			if ( gameObjects.TryGetValue( name, out component ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
-				var scale = component.GetComponent<RectTransform>().localScale;
-				component.GetComponent<RectTransform>().localScale = new Vector3( scale.x, val, scale.z );
-				component.SetActive( show );
+				var scale = go.GetComponent<RectTransform>().localScale;
+                go.GetComponent<RectTransform>().localScale = new Vector3( scale.x, val, scale.z );
+                go.SetActive( show );
 			}
 			else
 				Debug.Log( name + " couldn't be found in " + root.name );
@@ -370,11 +380,11 @@ namespace MANA3DGames
 
 		public void SetAnchoredPosition( string name, Vector2 pos, bool show = false )
 		{
-			GameObject component = null;
-			if ( gameObjects.TryGetValue( name, out component ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
-				component.GetComponent<RectTransform>().anchoredPosition = pos;
-				component.SetActive( show );
+                go.GetComponent<RectTransform>().anchoredPosition = pos;
+                go.SetActive( show );
 			}
 			else
 				Debug.Log( name + " couldn't be found in " + root.name );
@@ -382,12 +392,12 @@ namespace MANA3DGames
 
 		public void SetAnchoredPositionX( string name, float x, bool show = false )
 		{
-			GameObject component = null;
-			if ( gameObjects.TryGetValue( name, out component ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
-				var y = component.GetComponent<RectTransform> ().anchoredPosition.y;
-				component.GetComponent<RectTransform>().anchoredPosition = new Vector2( x, y );
-				component.SetActive( show );
+				var y = go.GetComponent<RectTransform> ().anchoredPosition.y;
+                go.GetComponent<RectTransform>().anchoredPosition = new Vector2( x, y );
+                go.SetActive( show );
 			}
 			else
 				Debug.Log( name + " couldn't be found in " + root.name );
@@ -395,12 +405,12 @@ namespace MANA3DGames
 
 		public void SetAnchoredPositionY( string name, float y, bool show = false )
 		{
-			GameObject component = null;
-			if ( gameObjects.TryGetValue( name, out component ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
-				var x = component.GetComponent<RectTransform> ().anchoredPosition.x;
-				component.GetComponent<RectTransform>().anchoredPosition = new Vector2( x, y );
-				component.SetActive( show );
+				var x = go.GetComponent<RectTransform> ().anchoredPosition.x;
+                go.GetComponent<RectTransform>().anchoredPosition = new Vector2( x, y );
+                go.SetActive( show );
 			}
 			else
 				Debug.Log( name + " couldn't be found in " + root.name );
@@ -414,14 +424,46 @@ namespace MANA3DGames
                 children[i].SetActive( active );
 		}
 
+
+        public void SetDropDownOption( string name, List<string> optionData )
+        {
+            GameObject go = Get( name );
+            if ( go )
+            {
+                TMP_Dropdown drop = go.GetComponent<TMP_Dropdown>();
+                drop.ClearOptions();
+                drop.AddOptions( optionData );
+            }
+        }
+        public void SetDropDownOption( string name, List<TMP_Dropdown.OptionData> optionData )
+        {
+            GameObject go = Get( name );
+            if ( go )
+            {
+                TMP_Dropdown drop = go.GetComponent<TMP_Dropdown>();
+                drop.ClearOptions();
+                drop.AddOptions( optionData );
+            }
+        }
+        public void SetDropDownOption( string name, List<Sprite> optionData )
+        {
+            GameObject go = Get( name );
+            if ( go )
+            {
+                TMP_Dropdown drop = go.GetComponent<TMP_Dropdown>();
+                drop.ClearOptions();
+                drop.AddOptions( optionData );
+            }
+        }
+
 		#endregion
 
 		#region [Get Functions]
 
-        public string GetText( string componentName, bool internalTxt = false )
+        public string GetText( string name, bool internalTxt = false )
         {
-            GameObject go;
-            if ( gameObjects.TryGetValue( componentName, out go ) )
+            GameObject go = Get( name );
+			if ( go )
             {
 				TextMeshProUGUI txt = internalTxt ? go.GetComponentInChildren<TextMeshProUGUI>() : go.GetComponent<TextMeshProUGUI>();
                 if ( txt )
@@ -431,10 +473,10 @@ namespace MANA3DGames
             return string.Empty;
         }
 
-		public string GetInputFieldValue( string componentName, bool internalTxt = false )
+		public string GetInputFieldValue( string name, bool internalTxt = false )
 		{
-			GameObject go;
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
 				TMP_InputField txt = internalTxt ? go.GetComponentInChildren<TMP_InputField>() : go.GetComponent<TMP_InputField>();
 				if ( txt )
@@ -444,10 +486,10 @@ namespace MANA3DGames
 			return string.Empty;
 		}
 
-		public float GetSliderValue( string componentName, bool internalTxt = false )
+		public float GetSliderValue( string name, bool internalTxt = false )
 		{
-			GameObject go;
-			if ( gameObjects.TryGetValue( componentName, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
 				Slider slider = internalTxt ? go.GetComponentInChildren<Slider>() : go.GetComponent<Slider>();
 				if ( slider )
@@ -457,11 +499,10 @@ namespace MANA3DGames
 			return 0.0f;
 		}
 
-        public Image GetUIImage( string componentName, bool internalImg = false )
+        public Image GetUIImage( string name, bool internalImg = false )
         {
-            GameObject go;
-
-            if ( gameObjects.TryGetValue( componentName, out go ) )
+            GameObject go = Get( name );
+			if ( go )
             {
                 if ( internalImg )
                 {
@@ -475,27 +516,27 @@ namespace MANA3DGames
             return null;
         }
 
-        public Sprite GetImageSprite( string componentName, bool internalImg = false )
+        public Sprite GetImageSprite( string name, bool internalImg = false )
 		{
-            Image img = GetUIImage( componentName, internalImg );
+            Image img = GetUIImage( name, internalImg );
             if ( img )
                 return img.sprite;
 			return null;
 		}
 
-        public float GetImageFillAmount( string componentName, bool internalImg = false )
+        public float GetImageFillAmount( string name, bool internalImg = false )
         {
-            Image img = GetUIImage( componentName, internalImg );
+            Image img = GetUIImage( name, internalImg );
             if ( img )
                 return img.fillAmount;
 
             return -1.0f;
         }
 
-        public TextMeshProUGUI GetTextMeshProUGUI( string componentName, bool internalTxt = false )
+        public TextMeshProUGUI GetTextMeshProUGUI( string name, bool internalTxt = false )
         {
-            GameObject go;
-            if ( gameObjects.TryGetValue( componentName, out go ) )
+            GameObject go = Get( name );
+			if ( go )
             {
                 TextMeshProUGUI txt = internalTxt ? go.GetComponentInChildren<TextMeshProUGUI>() : go.GetComponent<TextMeshProUGUI>();
                 return txt;
@@ -521,30 +562,36 @@ namespace MANA3DGames
 
 		public RectTransform GetRect( string name )
 		{
-			GameObject component = null;
-			gameObjects.TryGetValue( name, out component );
-			return component.GetComponent<RectTransform>();
+			GameObject go = Get( name );
+			if ( go )
+			    return go.GetComponent<RectTransform>();
+            else
+                return null;
 		}
 		public float GetRectPositionX( string name )
 		{
-			GameObject component = null;
-			gameObjects.TryGetValue( name, out component );
-			return component.GetComponent<RectTransform>().anchoredPosition.x;
+			GameObject go = Get( name );
+			if ( go )
+			    return go.GetComponent<RectTransform>().anchoredPosition.x;
+            else
+                return 0.0f;
 		}
 		public float GetRectPositionY( string name )
 		{
-			GameObject component = null;
-			gameObjects.TryGetValue( name, out component );
-			return component.GetComponent<RectTransform>().anchoredPosition.y;
+			GameObject go = Get( name );
+			if ( go )
+			    return go.GetComponent<RectTransform>().anchoredPosition.y;
+            else
+                return 0.0f;
 		}
 
 
 		public float GetRectScaleX( string name )
 		{
-			GameObject component = null;
-			if ( gameObjects.TryGetValue( name, out component ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
-				return component.GetComponent<RectTransform>().localScale.x;
+				return go.GetComponent<RectTransform>().localScale.x;
 			}
 			else
 				Debug.Log( name + " couldn't be found in " + root.name );
@@ -553,10 +600,10 @@ namespace MANA3DGames
 		}
 		public float GetRectScaleY( string name )
 		{
-			GameObject component = null;
-			if ( gameObjects.TryGetValue( name, out component ) )
+			GameObject go = Get( name );
+			if ( go )
 			{
-				return component.GetComponent<RectTransform>().localScale.y;
+				return go.GetComponent<RectTransform>().localScale.y;
 			}
 			else
 				Debug.Log( name + " couldn't be found in " + root.name );
@@ -567,9 +614,8 @@ namespace MANA3DGames
 
 		public Graphic GetGraphic( string name )
 		{
-			GameObject go;
-
-			if ( gameObjects.TryGetValue( name, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 				return go.GetComponent<Graphic>();
 
 			return null;
@@ -577,13 +623,22 @@ namespace MANA3DGames
 
 		public Color GetGraphicColor( string name )
 		{
-			GameObject go;
-
-			if ( gameObjects.TryGetValue( name, out go ) )
+			GameObject go = Get( name );
+			if ( go )
 				return go.GetComponent<Graphic>().color;
 
 			return Color.white;
 		}
+
+
+        public List<TMP_Dropdown.OptionData> GetDropDownOption( string name )
+        {
+            GameObject go = Get( name );
+            if ( go )
+                return go.GetComponent<TMP_Dropdown>().options;
+            else
+                return null;
+        }
 
 		#endregion
     }

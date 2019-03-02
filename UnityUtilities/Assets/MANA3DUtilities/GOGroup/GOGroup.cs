@@ -30,7 +30,7 @@ namespace MANA3DGames
 		/// Gets the gameObjects.
 		/// </summary>
 		/// <value>The gameObjects.</value>
-		public Dictionary<string, GameObject> Items { get { return gameObjects; } }
+		public Dictionary<string, GameObject> GameObjects { get { return gameObjects; } }
 
 		#endregion
 
