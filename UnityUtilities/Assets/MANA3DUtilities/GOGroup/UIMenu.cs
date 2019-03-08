@@ -653,5 +653,16 @@ namespace MANA3DGames
         }
 
 		#endregion
+
+
+        public void SetSelected( string name )
+        {
+            EventSystem.current.SetSelectedGameObject( Get( name ) );
+        }
+
+        public static void SetSelected( GameObject uiGO )
+        {
+            EventSystem.current.SetSelectedGameObject( uiGO );
+        }
     }
 }
