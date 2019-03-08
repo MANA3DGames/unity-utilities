@@ -10,13 +10,13 @@ public class Test : MonoBehaviour {
     public GameObject toBeMoved;
     public Transform target;
 
-   
+    UIMenu myMenu;
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start () 
     {
 
-        UIMenu myMenu = new UIMenu(menu);
+        myMenu = new UIMenu(menu);
         //Debug.Log(mmm.GetImageFillAmount("Image") );
 
 
@@ -45,6 +45,6 @@ public class Test : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        Debug.Log( myMenu.GetDropDownTextValue("Dropdown") );
 	}
 }

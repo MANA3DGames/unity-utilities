@@ -631,6 +631,18 @@ namespace MANA3DGames
 		}
 
 
+        public string GetDropDownTextValue( string name )
+        {
+            GameObject go = Get( name );
+            if ( go )
+            {
+                TMP_Dropdown drop = go.GetComponent<TMP_Dropdown>();
+                return drop.options[drop.value].text;
+            }
+            else
+                return string.Empty;
+        }
+
         public List<TMP_Dropdown.OptionData> GetDropDownOption( string name )
         {
             GameObject go = Get( name );
