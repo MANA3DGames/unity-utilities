@@ -41,6 +41,8 @@ public class Test : MonoBehaviour {
 
 
         myMenu.SetInputFiledText( "TextMeshPro - InputField", "TESSSS" );
+
+        myMenu.SetDropDownSelected( "Dropdown", 4 );
     }
 	
 	// Update is called once per frame

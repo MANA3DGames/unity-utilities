@@ -455,6 +455,15 @@ namespace MANA3DGames
                 drop.AddOptions( optionData );
             }
         }
+        public void SetDropDownSelected( string name, int value )
+        {
+            GameObject go = Get( name );
+            if ( go )
+            {
+                TMP_Dropdown drop = go.GetComponent<TMP_Dropdown>();
+                drop.value = value;
+            }
+        }
 
 		#endregion
 
