@@ -223,7 +223,7 @@ namespace MANA3DGames
             GameObject go = Get( name );
 			if ( go )
             {
-                InputField txt = internalTxt ? go.GetComponentInChildren<InputField>() : go.GetComponent<InputField>();
+                TMP_InputField txt = internalTxt ? go.GetComponentInChildren<TMP_InputField>() : go.GetComponent<TMP_InputField>();
                 if ( txt )
                 {
                     txt.text = text;

@@ -40,7 +40,7 @@ public class Test : MonoBehaviour {
         }  );
 
 
-        
+        myMenu.SetInputFiledText( "TextMeshPro - InputField", "TESSSS" );
     }
 	
 	// Update is called once per frame
