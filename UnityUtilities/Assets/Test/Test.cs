@@ -9,6 +9,7 @@ public class Test : MonoBehaviour {
 
     public GameObject toBeMoved;
     public Transform target;
+    public GameObject rotationTest;
 
     UIMenu myMenu;
 
@@ -43,6 +44,11 @@ public class Test : MonoBehaviour {
         myMenu.SetInputFiledText( "TextMeshPro - InputField", "TESSSS" );
 
         myMenu.SetDropDownSelected( "Dropdown", 4 );
+
+
+        CommonTween.RotateY( rotationTest, 0.0f, 90.0f, 1.0f, 1.0f, ()=> { 
+            CommonTween.RotateY( rotationTest, 90.0f, 0.0f, 1.0f, 1.0f );
+        } );
     }
 	
 	// Update is called once per frame

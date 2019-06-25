@@ -339,12 +339,10 @@ namespace MANA3DGames
 		public static LTDescr RotateX( GameObject go, float from, float to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None )
 		{
 			var trans = go.GetComponent<Transform>();
+			trans.localRotation = Quaternion.Euler( from, trans.localEulerAngles.y, trans.localEulerAngles.z );
 
-			var fromRotation = Quaternion.Euler( from, trans.localEulerAngles.y, trans.localEulerAngles.z );
-			trans.localRotation = Quaternion.Lerp( trans.localRotation, fromRotation, 0.0f );
-
-			var tween = LeanTween.rotateAroundLocal( go, Vector3.right, to, time );
-
+            float add = to - from;
+			var tween = LeanTween.rotateAroundLocal( go, Vector3.right, add, time );
 			tween = SetLastParameters( tween, delay, onCompleteAction, ease );
 			return tween;
 		}
@@ -356,13 +354,10 @@ namespace MANA3DGames
 		public static LTDescr RotateY( GameObject go, float from, float to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None )
 		{
 			var trans = go.GetComponent<Transform>();
+            trans.localRotation = Quaternion.Euler( trans.localEulerAngles.x, from, trans.localEulerAngles.z );
 
-			var fromRotation = Quaternion.Euler( trans.localEulerAngles.x, from, trans.localEulerAngles.z );
-			trans.localRotation = Quaternion.Lerp( trans.localRotation, fromRotation, 0.0f );
-
-			var tween = LeanTween.rotateAroundLocal( go, Vector3.up, to, time );
-			//tween.setFrom( from ); DO NOT ADD THIS!!!!!
-
+            float add = to - from;
+            var tween = LeanTween.rotateAroundLocal( go, Vector3.up, add, time );
 			tween = SetLastParameters( tween, delay, onCompleteAction, ease );
 			return tween;
 		}
@@ -374,13 +369,10 @@ namespace MANA3DGames
 		public static LTDescr RotateZ( GameObject go, float from, float to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None )
 		{
 			var trans = go.GetComponent<Transform>();
+            trans.localRotation = Quaternion.Euler( trans.localEulerAngles.x, trans.localEulerAngles.y, from );
 
-			var fromRotation = Quaternion.Euler( trans.localEulerAngles.x, trans.localEulerAngles.y, from );
-			trans.localRotation = Quaternion.Lerp( trans.localRotation, fromRotation, 0.0f );
-
-			var tween = LeanTween.rotateAroundLocal( go, Vector3.forward, to, time );
-			//tween.setFrom( from ); DO NOT ADD THIS!!!!!
-
+            float add = to - from;
+            var tween = LeanTween.rotateAroundLocal( go, Vector3.forward, add, time );
 			tween = SetLastParameters( tween, delay, onCompleteAction, ease );
 			return tween;
 		}
@@ -392,12 +384,9 @@ namespace MANA3DGames
         public static LTDescr Rotate( GameObject go, Quaternion from, Quaternion to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None )
         {
             var trans = go.GetComponent<Transform>();
-
-            trans.localRotation = Quaternion.Lerp( trans.localRotation, from, 0.0f );
+            trans.localRotation = from;
 
             var tween = LeanTween.rotateLocal( go, to.eulerAngles, time );
-            //tween.setFrom( from ); DO NOT ADD THIS!!!!!
-
             tween = SetLastParameters( tween, delay, onCompleteAction, ease );
             return tween;
         }
@@ -411,9 +400,7 @@ namespace MANA3DGames
 		public static LTDescr UIRotateZ( GameObject go, float from, float to, float time, float delay = 0.0f, Action onCompleteAction = null, Ease ease = Ease.None )
 		{
 			var rect = go.GetComponent<RectTransform>();
-
-			var fromRotation = Quaternion.Euler( rect.localEulerAngles.x, rect.localEulerAngles.y, from );
-			rect.localRotation = Quaternion.Lerp( rect.localRotation, fromRotation, 0.0f );
+			rect.localRotation = Quaternion.Euler( rect.localEulerAngles.x, rect.localEulerAngles.y, from );
 
 			var tween = LeanTween.rotateAroundLocal( rect, Vector3.forward, to, time );
 			//tween.setFrom( from ); DO NOT ADD THIS!!!!!
